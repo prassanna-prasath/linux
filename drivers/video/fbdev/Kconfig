@@ -660,7 +660,7 @@ config FB_ATMEL
 
 config FB_NVIDIA
 	tristate "nVidia Framebuffer Support"
-	depends on FB && PCI
+	depends on FB && PCI && HAS_IOPORT
 	select FB_CFB_FILLRECT
 	select FB_CFB_COPYAREA
 	select FB_CFB_IMAGEBLIT
@@ -1773,12 +1773,15 @@ config FB_BROADSHEET
 	  a bridge adapter.
 
 config FB_HYPERV
-	tristate "Microsoft Hyper-V Synthetic Video support"
-	depends on FB && HYPERV
+	tristate "Microsoft Hyper-V Synthetic Video support (DEPRECATED)"
+	depends on FB && HYPERV_VMBUS
 	select DMA_CMA if HAVE_DMA_CONTIGUOUS && CMA
 	select FB_IOMEM_HELPERS_DEFERRED
 	help
 	  This framebuffer driver supports Microsoft Hyper-V Synthetic Video.
+
+	  This driver is deprecated, please use the Hyper-V DRM driver at
+	  drivers/gpu/drm/hyperv (CONFIG_DRM_HYPERV) instead.
 
 config FB_SIMPLE
 	tristate "Simple framebuffer support"

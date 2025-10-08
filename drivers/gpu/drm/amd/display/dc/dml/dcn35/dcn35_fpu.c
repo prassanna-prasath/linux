@@ -31,7 +31,7 @@
 #include "dml/dcn31/dcn31_fpu.h"
 #include "dml/dml_inline_defs.h"
 
-#include "link.h"
+#include "link_service.h"
 
 #define DC_LOGGER_INIT(logger)
 
@@ -437,7 +437,7 @@ static unsigned int get_vertical_back_porch(struct dc_crtc_timing *timing)
 int dcn35_populate_dml_pipes_from_context_fpu(struct dc *dc,
 					      struct dc_state *context,
 					      display_e2e_pipe_params_st *pipes,
-					      bool fast_validate)
+					      enum dc_validate_mode validate_mode)
 {
 	int i, pipe_cnt;
 	struct resource_context *res_ctx = &context->res_ctx;
@@ -446,7 +446,7 @@ int dcn35_populate_dml_pipes_from_context_fpu(struct dc *dc,
 	const unsigned int max_allowed_vblank_nom = 1023;
 
 	dcn31_populate_dml_pipes_from_context(dc, context, pipes,
-					      fast_validate);
+					      validate_mode);
 
 	for (i = 0, pipe_cnt = 0; i < dc->res_pool->pipe_count; i++) {
 		struct dc_crtc_timing *timing;

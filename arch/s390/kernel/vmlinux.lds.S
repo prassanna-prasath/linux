@@ -71,6 +71,13 @@ SECTIONS
 	. = ALIGN(PAGE_SIZE);
 	__end_ro_after_init = .;
 
+	. = ALIGN(8);
+	.skey_region_table : {
+		__skey_region_start = .;
+		KEEP(*(.skey_region))
+		__skey_region_end = .;
+	}
+
 	.data.rel.ro : {
 		*(.data.rel.ro .data.rel.ro.*)
 	}
@@ -202,6 +209,11 @@ SECTIONS
 	. = ALIGN(PAGE_SIZE);
 	_end = . ;
 
+	/* Debugging sections.	*/
+	STABS_DEBUG
+	DWARF_DEBUG
+	ELF_DETAILS
+
 	/*
 	 * uncompressed image info used by the decompressor
 	 * it should match struct vmlinux_info
@@ -231,11 +243,6 @@ SECTIONS
 		QUAD(kasan_early_shadow_p4d)
 #endif
 	} :NONE
-
-	/* Debugging sections.	*/
-	STABS_DEBUG
-	DWARF_DEBUG
-	ELF_DETAILS
 
 	/*
 	 * Make sure that the .got.plt is either completely empty or it
